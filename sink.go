@@ -52,7 +52,7 @@ func resetSinkRegistry() {
 	}
 }
 
-// Sink defines the interface to write to and close logger destinations.
+// Sink 水槽defines the interface to write to and close logger destinations.
 type Sink interface {
 	zapcore.WriteSyncer
 	io.Closer

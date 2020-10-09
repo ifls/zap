@@ -34,7 +34,7 @@ const (
 )
 
 // A SugaredLogger wraps the base Logger functionality in a slower, but less
-// verbose, API. Any Logger can be converted to a SugaredLogger with its Sugar
+// verbose繁琐, API. Any Logger can be converted to a SugaredLogger with its Sugar
 // method.
 //
 // Unlike the Logger, the SugaredLogger doesn't insist on structured logging.
