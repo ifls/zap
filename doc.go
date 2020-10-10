@@ -20,27 +20,27 @@
 
 // Package zap provides fast, structured, leveled logging.
 //
-// For applications that log in the hot path, reflection-based serialization
-// and string formatting are prohibitively expensive - they're CPU-intensive
-// and make many small allocations. Put differently, using json.Marshal and
-// fmt.Fprintf to log tons of interface{} makes your application slow.
+// For applications that log in the hot path, reflection-based基于反射的 serialization
+// and string formatting are prohibitively过分地 expensive - they're CPU-intensive
+// and make many small allocations. cpu密集, 以及很多小的内存分配
+// Put differently, using json.Marshal and fmt.Fprintf to log tons of interface{} makes your application slow.
 //
-// Zap takes a different approach. It includes a reflection-free,
-// zero-allocation JSON encoder, and the base Logger strives to avoid
-// serialization overhead and allocations wherever possible. By building the
+// Zap takes a different approach.
+// It includes a reflection-free, zero-allocation JSON encoder, and the base Logger strives to avoid
+// serialization overhead消耗 and allocations wherever possible.
+// By building the
 // high-level SugaredLogger on that foundation, zap lets users choose when
-// they need to count every allocation and when they'd prefer a more familiar,
-// loosely typed API.
+// they need to count??? every allocation and when they'd prefer a more familiar,
+// loosely typed API. 更熟悉的, 松类型的 API
 //
 // Choosing a Logger
 //
-// In contexts where performance is nice, but not critical, use the
-// SugaredLogger. It's 4-10x faster than other structured logging packages and
-// supports both structured and printf-style logging. Like log15 and go-kit,
+// In contexts where performance is nice, but not critical, use the SugaredLogger.
+// It's 4-10x faster than other structured logging packages and supports both structured and printf-style logging.
+// Like log15 and go-kit,
 // the SugaredLogger's structured logging APIs are loosely typed and accept a
-// variadic number of key-value pairs. (For more advanced use cases, they also
-// accept strongly typed fields - see the SugaredLogger.With documentation for
-// details.)
+// variadic 可变 number of key-value pairs.
+// (For more advanced use cases, they also accept strongly typed fields - see the todo SugaredLogger.With documentation for details.)
 //  sugar := zap.NewExample().Sugar()
 //  defer sugar.Sync()
 //  sugar.Infow("failed to fetch URL",
@@ -50,9 +50,8 @@
 //  )
 //  sugar.Infof("failed to fetch URL: %s", "http://example.com")
 //
-// By default, loggers are unbuffered. However, since zap's low-level APIs
-// allow buffering, calling Sync before letting your process exit is a good
-// habit.
+// By default, loggers are unbuffered.
+// However, since zap's low-level APIs allow buffering, calling Sync before letting your process exit is a good habit.
 //
 // In the rare contexts where every microsecond and every allocation matter,
 // use the Logger. It's even faster than the SugaredLogger and allocates far

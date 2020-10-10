@@ -41,14 +41,14 @@ import (
 type Logger struct {
 	core zapcore.Core
 
-	development bool
+	development bool // 支持 DPanicLevel 级别的打印
 	name        string
 	errorOutput zapcore.WriteSyncer
 
-	addCaller bool
-	addStack  zapcore.LevelEnabler
+	addCaller bool                 // 是否打印调用行
+	addStack  zapcore.LevelEnabler // 根据级别判断,
 
-	callerSkip int
+	callerSkip int // 跳过最内的几层堆栈
 }
 
 // New constructs a new Logger from the provided zapcore.Core and Options. If
@@ -61,6 +61,7 @@ type Logger struct {
 // more convenient.
 //
 // For sample code, see the package-level AdvancedConfiguration example.
+// 创建日志对象的入口
 func New(core zapcore.Core, options ...Option) *Logger {
 	if core == nil {
 		return NewNop()
@@ -68,7 +69,7 @@ func New(core zapcore.Core, options ...Option) *Logger {
 	log := &Logger{
 		core:        core,
 		errorOutput: zapcore.Lock(os.Stderr),
-		addStack:    zapcore.FatalLevel + 1,
+		addStack:    zapcore.FatalLevel + 1, // 这很大, 表示不打堆栈
 	}
 	return log.WithOptions(options...)
 }
@@ -296,6 +297,7 @@ func (log *Logger) check(lvl zapcore.Level, msg string) *zapcore.CheckedEntry {
 
 	// Thread the error output through to the CheckedEntry.
 	ce.ErrorOutput = log.errorOutput
+	// 打印调用堆栈
 	if log.addCaller {
 		frame, defined := getCallerFrame(log.callerSkip + callerSkipOffset)
 		if !defined {
